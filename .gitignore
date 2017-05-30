@@ -1,20 +1,19 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+
+typings
+**/app/**/*.js
+**/app/**/*.map
+
 # compiled output
 /dist
 /tmp
+/out-tsc
 
 # dependencies
-/node_modules
-/bower_components
+node_modules
+bower_components
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
 
 # IDE - VSCode
 .vscode/*
