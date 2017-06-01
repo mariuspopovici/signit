@@ -1,6 +1,6 @@
-import { Injectable }      from '@angular/core';
+import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
-import { myConfig }        from './auth.config';
+import { myConfig } from './auth.config';
 import { options } from '../auth.options';
 
 import {Router} from '@angular/router';
@@ -38,8 +38,13 @@ export class Auth {
   };
 
   public logout() {
+    console.log(this.lock.getUsers());
     // Remove token from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
   };
+
+  public getUserList() {
+    return this.lock.getUsers();
+  }
 }

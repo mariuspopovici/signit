@@ -1,16 +1,19 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule} from '@angular/forms';
 import { HttpModule, Http, RequestOptions} from '@angular/http';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
+import {DndModule} from 'ng2-dnd';
 
-
-import { AppComponent }  from './app.component';
+import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import {GroupsComponent} from './components/groups/groups.component';
+
 
 import {Auth} from './services/auth.service';
+import {GroupsService} from './services/groups.service';
 
 import { routing, appRoutingProviders } from './app.routing';
 import { AuthGuard } from './auth.guard';
@@ -20,8 +23,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, HttpModule, routing],
-  declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent ],
+  imports:      [ BrowserModule, FormsModule, HttpModule, routing, DndModule.forRoot()],
+  declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent ],
   bootstrap:    [ AppComponent ],
   providers: [
     appRoutingProviders,
@@ -31,7 +34,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
       deps: [ Http, RequestOptions ]
-    }
+    },
+    GroupsService
   ]
 })
 export class AppModule { }

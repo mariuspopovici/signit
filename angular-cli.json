@@ -19,7 +19,9 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../bower_components/bootstrap/dist/css/bootstrap.css"
+        "../bower_components/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/ng2-dnd/style.css",
+        "../bower_components/components-font-awesome/css/font-awesome.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

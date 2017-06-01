@@ -1,0 +1,29 @@
+<h4>Groups Setup</h4>
+<div class="row">
+    <div class="col-sm-3">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+        Available Reviewers
+        </div>
+        <div class="panel-body" dnd-sortable-container [dropZones]="['members-zone']" [sortableData]="users">
+            <ul class="list-group" >
+                <li *ngFor="let item of users; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    
+    <div class="col-sm-3" *ngFor="let group of groups">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+        {{group.groupName}}
+        </div>
+        <div class="panel-body" dnd-sortable-container [dropZones]="['members-zone']" [sortableData]="group.groupMembers">
+            <ul class="list-group" >
+                <li *ngFor="let member of group.groupMembers; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{member}}</li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    
+</div>
