@@ -5,15 +5,17 @@ import { HttpModule, Http, RequestOptions} from '@angular/http';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import {DndModule} from 'ng2-dnd';
 
+// components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {GroupsComponent} from './components/groups/groups.component';
 
-
+// services
 import {Auth} from './services/auth.service';
 import {GroupsService} from './services/groups.service';
+import {ProfileService} from './services/profile.service';
 
 import { routing, appRoutingProviders } from './app.routing';
 import { AuthGuard } from './auth.guard';
@@ -35,7 +37,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       useFactory: authHttpServiceFactory,
       deps: [ Http, RequestOptions ]
     },
-    GroupsService
+    GroupsService,
+    ProfileService
   ]
 })
 export class AppModule { }

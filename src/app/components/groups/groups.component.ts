@@ -1,22 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupsService } from '../../services/groups.service';
+import { ProfileService } from '../../services/profile.service';
+
 
 @Component({
+    moduleId: module.id,
     selector: 'app-groups',
-    templateUrl: 'groups.component.html'
+    templateUrl: 'groups.component.html',
+    styleUrls: ['groups.component.css']
 })
 
 export class GroupsComponent implements OnInit {
     // init groups in an empty array
     groups: any = [];
-    users: Array<string> = ['Sugar Ray Robinson', 'Muhammad Ali', 'George Foreman',
-        'Joe Frazier', 'Jake LaMotta', 'Joe Louis', 'Jack Dempsey', 'Rocky Marciano',
-        'Mike Tyson', 'Oscar De La Hoya'];
-    constructor(private groupsService: GroupsService) { }
+    users: Array<string> = [];
+    constructor(private groupsService: GroupsService, private profileService: ProfileService) { }
 
     ngOnInit() {
         this.groupsService.getAllGroups().subscribe(groups => {
             this.groups = groups;
+        });
+
+        this.profileService.getAllProfiles().subscribe(profiles => {
+            profiles.forEach(userProfile => {
+                this.users.push(userProfile.full_name);
+            });
         });
     }
 }

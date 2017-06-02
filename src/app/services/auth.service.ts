@@ -3,6 +3,9 @@ import { tokenNotExpired } from 'angular2-jwt';
 import { myConfig } from './auth.config';
 import { options } from '../auth.options';
 
+import {ProfileService} from './profile.service';
+
+
 import {Router} from '@angular/router';
 
 // Avoid name not found warnings
@@ -12,16 +15,25 @@ declare var Auth0Lock: any;
 export class Auth {
   // Configure Auth0
   lock = new Auth0Lock(myConfig.clientID, myConfig.domain, options);
+  syncResult: any;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private profileService: ProfileService) {
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', (authResult: any) => {
       this.lock.getProfile(authResult.idToken, function (error: any, profile: any) {
         if (error) {
           throw new Error(error);
         }
+
+        // cache id_token and profile
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('profile', JSON.stringify(profile));
+
+        // sync auth user profile with local profiles collection upon successful login
+        profileService.syncProfile(profile).subscribe((data) => {}, (err) => {
+          console.error('Error syncing user profile.', err);
+        });
+
       });
     });
   }
@@ -38,13 +50,8 @@ export class Auth {
   };
 
   public logout() {
-    console.log(this.lock.getUsers());
     // Remove token from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
   };
-
-  public getUserList() {
-    return this.lock.getUsers();
-  }
 }
