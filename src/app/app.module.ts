@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, RequestOptions} from '@angular/http';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
-import {DndModule} from 'ng2-dnd';
+import { DndModule } from 'ng2-dnd';
+import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
+import { FocusDirective } from './shared/focus.directive';
 
 // components
 import { AppComponent } from './app.component';
@@ -25,9 +27,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, HttpModule, routing, DndModule.forRoot()],
-  declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent ],
-  bootstrap:    [ AppComponent ],
+  imports: [ BrowserModule, FormsModule, HttpModule, routing, DndModule.forRoot(), Ng2FilterPipeModule],
+  declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent, FocusDirective ],
+  bootstrap: [ AppComponent ],
   providers: [
     appRoutingProviders,
     Auth,
