@@ -113,8 +113,6 @@ router.put('/userprofiles/:id', function(req, res, next) {
     var profile = req.body;
     var updObj = {};
 
-    console.log(profile);
-
     if (profile.name) {
         updObj.name = profile.name;
     }
