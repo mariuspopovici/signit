@@ -29,6 +29,7 @@ export class GroupsComponent implements OnInit {
 
     constructor(private groupsService: GroupsService, private profileService: ProfileService) { }
 
+
     ngOnInit() {
         this.userFilter = '';
         this.showSearch = false;
@@ -87,6 +88,7 @@ export class GroupsComponent implements OnInit {
      */
     saveGroup(group, form: NgForm) {
         if (form.value) {
+            console.log(group);
             group.groupName = form.value.groupName;
             this.groupsService.saveGroup(group).subscribe((data) => {
                 // if successful then leave edit mode
@@ -104,5 +106,12 @@ export class GroupsComponent implements OnInit {
     cancelGroupEdit(group) {
         group.groupName = group.previousGroupName;
         this.toggleGroupEdit(group);
+    }
+
+    /**
+     * On drop handler.
+     */
+    onDrop($event: any) {
+        console.log($event);
     }
 }

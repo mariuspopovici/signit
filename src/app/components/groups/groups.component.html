@@ -17,7 +17,7 @@
                 <ul class="list-group">
                     <li *ngIf="(users | filterBy: userFilter).length === 0" class="list-group-item">No matching elements</li>
                     <li *ngFor="let user of users |filterBy: userFilter; let i = index" class="list-group-item" 
-                        dnd-sortable [sortableIndex]="i" >{{user}}</li>
+                        [dragData]="user" dnd-sortable [sortableIndex]="i" >{{user}}</li>
                 </ul>
             </div>
         </div>
@@ -52,7 +52,9 @@
             </div>
             <div class="panel-body" dnd-sortable-container [dropZones]="['members-zone']" [sortableData]="group.groupMembers">
                 <ul class="list-group">
-                    <li *ngFor="let member of group.groupMembers; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{member}}</li>
+                    <li *ngFor="let member of group.groupMembers; let i = index" 
+                        class="list-group-item" 
+                        dnd-sortable [sortableIndex]="i">{{member}}</li>
                 </ul>
             </div>
         </div>
