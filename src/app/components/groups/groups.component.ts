@@ -88,7 +88,6 @@ export class GroupsComponent implements OnInit {
      */
     saveGroup(group, form: NgForm) {
         if (form.value) {
-            console.log(group);
             group.groupName = form.value.groupName;
             this.groupsService.saveGroup(group).subscribe((data) => {
                 // if successful then leave edit mode
@@ -97,6 +96,17 @@ export class GroupsComponent implements OnInit {
                 console.error('Error saving group.', err);
             });
         }
+    }
+
+    /**
+     * Save changes to group.
+     * @param group the selected user group
+     * @param form reference to group edit form
+     */
+    private _saveGroup(group) {
+        return this.groupsService.saveGroup(group).subscribe((data) => {}, (err) => {
+                console.error('Error saving group.', err);
+        });
     }
 
     /**
@@ -111,7 +121,16 @@ export class GroupsComponent implements OnInit {
     /**
      * On drop handler.
      */
-    onDrop($event: any) {
-        console.log($event);
+    onDrop($event: any, group: any) {
+        console.log('dropped', $event + ' on ' + group.groupName);
+        this._saveGroup(group);
+    }
+
+    /**
+     * On drag handler.
+     */
+    onDrag($event: any, group: any) {
+        console.log(' dragged: ' + $event + ' out of ' + group.groupName);
+        //this._saveGroup(group);
     }
 }
