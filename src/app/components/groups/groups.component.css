@@ -39,3 +39,9 @@ a.clickable:hover { text-decoration:none; }
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
 .right-addon input { padding-right: 30px; }
+
+
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}

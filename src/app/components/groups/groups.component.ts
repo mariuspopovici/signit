@@ -121,16 +121,22 @@ export class GroupsComponent implements OnInit {
     /**
      * On drop handler.
      */
-    onDrop($event: any, group: any) {
-        console.log('dropped', $event + ' on ' + group.groupName);
+    onDrop(e: any, group: any) {
+        let groupName = e.dragData;
+        if (group.groupMembers.indexOf(groupName) < 0) {
+            group.groupMembers.push(e.dragData);
+        }
         this._saveGroup(group);
     }
 
     /**
-     * On drag handler.
+     * On drag end handler.
      */
-    onDrag($event: any, group: any) {
-        console.log(' dragged: ' + $event + ' out of ' + group.groupName);
-        //this._saveGroup(group);
+    onDragEnd(e: any, member: any, group: any) {
+        group.groupMembers = group.groupMembers.filter(function(e) {
+            return group.groupMembers.indexOf(e) === group.groupMembers.lastIndexOf(e);
+        });
+        group.groupMembers.splice(group.groupMembers.indexOf(member), 1);
+        this._saveGroup(group);
     }
 }
