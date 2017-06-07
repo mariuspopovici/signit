@@ -24,6 +24,8 @@ export class GroupsComponent implements OnInit {
     userFilter: any;
     showSearch: boolean;
 
+    hoverMembers: { [key: string]: string; } = {};
+
     // init an event emitter to set focus to specific input fields
     focusSettingEventEmitter = new EventEmitter<boolean>();
 
@@ -138,5 +140,22 @@ export class GroupsComponent implements OnInit {
         });
         group.groupMembers.splice(group.groupMembers.indexOf(member), 1);
         this._saveGroup(group);
+    }
+
+    /**
+     * Create new group.
+     */
+    createNewGroup() {
+        console.log('implement me');
+    }
+
+    /**
+     * createGroupModal onShown() handler.
+     */
+    onCreateGroupModalShown() {
+        // set focus in the text input
+        setTimeout(() => {
+            this.setFocus();
+        });
     }
 }

@@ -16,3 +16,10 @@ body {
   line-height: 60px; /* Vertically center the text there */
   background-color: #f5f5f5;
 }
+
+
+.btn-primary-spacing 
+{
+  margin-right: 5px;
+  margin-bottom: 5px !important;
+}

@@ -1,74 +1,105 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3>Set Up Groups</h3>
-  </div>
-  <div class="panel-body">
-  <p>Set up and organize review groups by dragging from the available reviewers list or in between groups.  </p>
-  <a href="#" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-plus"></span> Create New Group</a>
-  </div>
+    <div class="panel-heading">
+        <h3>Set Up Groups</h3>
+    </div>
+    <div class="panel-body">
+        <p>Set up and organize review groups by dragging from the available reviewers list or in between groups.</p>
+        <button class="btn btn-success" type="button" (click)="createGroupModal.show()"><i class="glyphicon glyphicon-plus"></i> Create New Group</button>
+    </div>
 </div>
 
 <div class="row display-flex">
-  <div class="col-md-3">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Available Reviewers</h3>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-search" (click)="toggleSearch()"></i></span>
-      </div>
-      <div class="panel-body">
-        <form *ngIf="showSearch" class="form-search" method="get" id="searchForm" action="/">
-          <div class="inner-addon right-addon">
-            <i class="glyphicon glyphicon-search"></i>
-            <input type="text" [focus]="focusSettingEventEmitter" [(ngModel)]="userFilter" class="form-control" name="search" placeholder="Search"
-              value="">
-          </div>
-        </form>
-        <br>
-        <ul class="list-group">
-          <li *ngIf="(users | filterBy: userFilter).length === 0" class="list-group-item">No matching elements</li>
-          <li *ngFor="let user of users |filterBy: userFilter; let i = index" class="list-group-item" draggable [dragScope]="'user'"
-            [dragData]="user">{{user}}</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-9">
-    <div class="row display-flex">
-      <div class="col-md-4" *ngFor="let group of groups">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-
-            <div *ngIf="!group.isInEditMode">
-              <h3 class="panel-title">{{group.groupName}}</h3>
-              <span class="pull-right clickable" (click)="toggleGroupEdit(group)"><i class="glyphicon glyphicon-pencil"></i></span>
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Available Reviewers</h3>
+                <span class="pull-right clickable"><i class="glyphicon glyphicon-search" (click)="toggleSearch()"></i></span>
             </div>
+            <div class="panel-body">
+                <form *ngIf="showSearch" class="form-search" method="get" id="searchForm" action="/">
+                    <div class="inner-addon right-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <input type="text" [focus]="focusSettingEventEmitter" [(ngModel)]="userFilter" class="form-control" name="search" placeholder="Search"
+                            value="">
+                    </div>
+                </form>
+                <br>
+                <ul class="list-group">
+                    <li *ngIf="(users | filterBy: userFilter).length === 0" class="list-group-item">No matching elements</li>
+                    <li *ngFor="let user of users |filterBy: userFilter; let i = index" class="list-group-item" draggable [dragScope]="'user'"
+                        [dragData]="user">{{user}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row display-flex">
+            <div class="col-md-4" *ngFor="let group of groups">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
 
-            <div *ngIf="group.isInEditMode">
-              <form #theForm="ngForm" (ngSubmit)="saveGroup(group, theForm)" novalidate class="form-edit-group" id="editGroupForm">
-                <div class="input-group">
-                  <input id="groupName" [focus]="focusSettingEventEmitter" [(ngModel)]="group.groupName" type="text" class="form-control" name="groupName">
-                  <div class="input-group-btn">
-                    <!-- Cancel edit mode -->
-                    <button class="btn btn-default" type="button" (click)="cancelGroupEdit(group)">
+                        <div *ngIf="!group.isInEditMode">
+                            <h3 class="panel-title">{{group.groupName}}</h3>
+                            <span class="pull-right clickable" (click)="toggleGroupEdit(group)"><i class="glyphicon glyphicon-pencil"></i></span>
+                        </div>
+
+                        <div *ngIf="group.isInEditMode">
+                            <form #theForm="ngForm" (ngSubmit)="saveGroup(group, theForm)" novalidate class="form-edit-group" id="editGroupForm">
+                                <div class="input-group">
+                                    <input id="groupName" [focus]="focusSettingEventEmitter" [(ngModel)]="group.groupName" type="text" class="form-control" name="groupName">
+                                    <div class="input-group-btn">
+                                        <!-- Cancel edit mode -->
+                                        <button class="btn btn-default" type="button" (click)="cancelGroupEdit(group)">
                                 <i class="glyphicon glyphicon-remove"></i>
                             </button>
-                    <!-- Save group name -->
-                    <button class="btn btn-default">
+                                        <!-- Save group name -->
+                                        <button class="btn btn-default">
                                 <i class="glyphicon glyphicon-ok"></i>
                             </button>
-                  </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-body" droppable [dropScope]="['user']" (onDrop)="onDrop($event, group)">
+                        <ul class="list-group">
+                            <li *ngFor="let member of group.groupMembers" draggable [dragScope]="'user'" [dragData]="member" (onDragEnd)="onDragEnd($event, member, group)"
+                                class="list-group-item">{{member}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-              </form>
             </div>
-          </div>
-          <div class="panel-body" droppable [dropScope]="['user']" (onDrop)="onDrop($event, group)">
-            <ul class="list-group">
-              <li *ngFor="let member of group.groupMembers" draggable [dragScope]="'user'" [dragData]="member" (onDragEnd)="onDragEnd($event, member, group)"
-                class="list-group-item">{{member}}</li>
-            </ul>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+
+
+<div class="modal fade" bsModal #createGroupModal="bs-modal" tabindex="-1" role="dialog" (onShown)="onCreateGroupModalShown()"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Create New Group</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="createGroupModal.hide()"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form #theForm="ngForm" (ngSubmit)="createNewGroup(theForm)">
+                <div class="form-group row">
+                    <label for="inputGroupName" class="col-sm-2 col-form-label">Group Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputGroupName" placeholder="" [focus]="focusSettingEventEmitter">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="button" (click)="createGroupModal.hide()" class="btn pull-right btn-primary-spacing">Cancel</button> 
+                        <button type="submit" (click)="createGroupModal.hide()" class="btn btn-primary pull-right btn-primary-spacing">OK</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,7 +1,15 @@
 const express = require('express');
 const router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://signit:signit@ds155841.mlab.com:55841/signit', ['groups', 'user_profiles']);
+
+var dbUrl = process.env.DB_USER + ":" 
+    +  process.env.DB_PASS + "@" 
+    +  process.env.DB_HOST + ":" 
+    +  process.env.DB_PORT + "/" 
+    +  process.env.DB_NAME;
+
+var db = mongojs(dbUrl, ['groups', 'user_profiles']);
+
 
 // get all groups
 router.get('/groups', function(req, res, next) {

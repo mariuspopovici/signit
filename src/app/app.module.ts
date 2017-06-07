@@ -6,6 +6,7 @@ import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { FocusDirective } from './shared/focus.directive';
 import {Ng2DragDropModule} from 'ng2-drag-drop';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 // components
 import { AppComponent } from './app.component';
@@ -27,7 +28,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, Ng2DragDropModule],
+  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, Ng2DragDropModule, ModalModule.forRoot()],
   declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent, FocusDirective ],
   bootstrap: [ AppComponent ],
   providers: [
