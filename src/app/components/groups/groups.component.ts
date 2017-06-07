@@ -145,8 +145,10 @@ export class GroupsComponent implements OnInit {
     /**
      * Create new group.
      */
-    createNewGroup() {
-        console.log('implement me');
+    createNewGroup(form: NgForm) {
+        if (form.value) {
+            console.log(form.value);
+        }
     }
 
     /**

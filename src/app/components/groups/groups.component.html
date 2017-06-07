@@ -85,11 +85,11 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form #theForm="ngForm" (ngSubmit)="createNewGroup(theForm)">
+            <form #createGroupForm="ngForm" (ngSubmit)="createNewGroup(createGroupForm)">
                 <div class="form-group row">
                     <label for="inputGroupName" class="col-sm-2 col-form-label">Group Name:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputGroupName" placeholder="" [focus]="focusSettingEventEmitter">
+                        <input type="text" name="inputGroupName" class="form-control" id="inputGroupName" placeholder="" [focus]="focusSettingEventEmitter">
                     </div>
                 </div>
                 <div class="form-group row">

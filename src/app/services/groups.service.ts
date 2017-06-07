@@ -27,7 +27,6 @@ export class GroupsService {
 
     // save group
     saveGroup(group) {
-        console.log(group);
         return this.http.put(this.url + group._id, JSON.stringify(group), this.options)
             .map(res => res.json())
             .catch(this.handleError);
