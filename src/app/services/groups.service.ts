@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class GroupsService {
@@ -28,6 +29,12 @@ export class GroupsService {
     // save group
     saveGroup(group) {
         return this.http.put(this.url + group._id, JSON.stringify(group), this.options)
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
+    addGroup(group) {
+        return this.http.post(this.url, JSON.stringify(group), this.options)
             .map(res => res.json())
             .catch(this.handleError);
     }

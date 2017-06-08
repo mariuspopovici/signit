@@ -2,8 +2,6 @@ require('dotenv').config({
     path: "config.env"
 });
 
-console.log(process.env.DB_NAME);
-
 // Get dependencies
 const express = require('express');
 const path = require('path');

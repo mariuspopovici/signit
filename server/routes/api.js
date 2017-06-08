@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 var mongojs = require('mongojs');
 
-var dbUrl = process.env.DB_USER + ":" 
-    +  process.env.DB_PASS + "@" 
-    +  process.env.DB_HOST + ":" 
-    +  process.env.DB_PORT + "/" 
+var dbUrl = process.env.DB_USER + ":"
+    +  process.env.DB_PASS + "@"
+    +  process.env.DB_HOST + ":"
+    +  process.env.DB_PORT + "/"
     +  process.env.DB_NAME;
 
 var db = mongojs(dbUrl, ['groups', 'user_profiles']);
@@ -16,7 +16,7 @@ router.get('/groups', function(req, res, next) {
     db.groups.find(function(error, groups) {
         if (error) {
             res.send(error);
-        } else {          
+        } else {
             res.json(groups);
         }
     });
@@ -46,7 +46,7 @@ router.post('/groups', function(req, res, next) {
             error: "Invalid data"
         });
     } else {
-        db.save(group, function(err, result) {
+        db.groups.save(group, function(err, result) {
             if (err) {
                 res.send(err);
             }
@@ -91,7 +91,7 @@ router.put('/groups/:id', function(req, res, next) {
 
 // delete group
 router.delete('/groups/:id', function(req, res, next) {
-    
+
     db.groups.remove({
         _id: mongojs.ObjectId(req.params.id)
     }, '', function(err, result) {
@@ -102,7 +102,7 @@ router.delete('/groups/:id', function(req, res, next) {
             res.json(result);
         }
     });
-    
+
 });
 
 // get user profiles

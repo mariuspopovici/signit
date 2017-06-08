@@ -23,7 +23,7 @@ export class GroupsComponent implements OnInit {
     users: any [];
     userFilter: any;
     showSearch: boolean;
-
+    newGroupName: string;
     hoverMembers: { [key: string]: string; } = {};
 
     // init an event emitter to set focus to specific input fields
@@ -36,7 +36,7 @@ export class GroupsComponent implements OnInit {
         this.userFilter = '';
         this.showSearch = false;
         this.users = [];
-
+        this.newGroupName = '';
         this.groupsService.getAllGroups().subscribe(groups => {
             this.groups = groups;
         });
@@ -147,7 +147,16 @@ export class GroupsComponent implements OnInit {
      */
     createNewGroup(form: NgForm) {
         if (form.value) {
-            console.log(form.value);
+            let group = {
+              groupName: form.value.inputGroupName,
+              groupMembers: []
+            };
+            this.groupsService.addGroup(group).subscribe((data) => {
+              this.groups.push(data);
+              this.newGroupName = null;
+            }, (err) => {
+                console.error('Error adding group.', err);
+        });
         }
     }
 
