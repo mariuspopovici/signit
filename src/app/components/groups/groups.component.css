@@ -21,8 +21,8 @@ a.clickable { color: inherit; }
 a.clickable:hover { text-decoration:none; }
 
 /* enable absolute positioning */
-.inner-addon { 
-    position: relative; 
+.inner-addon {
+    position: relative;
 }
 
 /* style icon */
@@ -44,4 +44,8 @@ a.clickable:hover { text-decoration:none; }
 .row.display-flex {
   display: flex;
   flex-wrap: wrap;
+}
+
+.searchbox {
+  margin-bottom: 6px;
 }
