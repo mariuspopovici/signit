@@ -99,7 +99,7 @@
             <label for="inputGroupName" class="col-sm-2 col-form-label">Group Name:</label>
             <div class="col-sm-10">
               <input type="text" required [(ngModel)]="newGroupName" #inputGroupName="ngModel" name="inputGroupName" class="form-control"
-                id="inputGroupName" placeholder="" [focus]="focusSettingEventEmitter">
+                id="inputGroupName" placeholder="">
             </div>
             <div *ngIf="inputGroupName.errors && (inputGroupName.dirty || inputGroupName.touched)" class="col-sm-10 alert alert-danger">Group name is required.
             </div>
