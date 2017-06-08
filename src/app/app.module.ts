@@ -7,6 +7,9 @@ import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { FocusDirective } from './shared/focus.directive';
 import {Ng2DragDropModule} from 'ng2-drag-drop';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {PopoverModule} from 'ngx-popover';
+import {JasperoConfirmationsModule} from '@jaspero/ng2-confirmations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // components
 import { AppComponent } from './app.component';
@@ -28,7 +31,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, Ng2DragDropModule, ModalModule.forRoot()],
+  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, Ng2DragDropModule, ModalModule.forRoot(), PopoverModule,
+    JasperoConfirmationsModule, BrowserAnimationsModule],
   declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent, FocusDirective ],
   bootstrap: [ AppComponent ],
   providers: [

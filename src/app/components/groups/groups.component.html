@@ -1,3 +1,5 @@
+<jaspero-confirmations></jaspero-confirmations>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3>Set Up Groups</h3>
@@ -39,8 +41,15 @@
           <div class="panel-heading">
 
             <div *ngIf="!group.isInEditMode">
-              <h3 class="panel-title">{{group.groupName}}</h3>
-              <span class="pull-right clickable" (click)="toggleGroupEdit(group)"><i class="glyphicon glyphicon-pencil"></i></span>
+              <h3 class="panel-title clickable" (click)="toggleGroupEdit(group)">{{group.groupName}}</h3>
+              <!-- group popover menu -->
+              <popover-content #groupPopover placement="top" [animation]="true" [closeOnClickOutside]="true">
+              <div class="btn-group-vertical">
+                <button type="button" class="btn btn-link" (click)="toggleGroupEdit(group)">Edit</button>
+                <button type="button" class="btn btn-link" (click)="deleteGroup(group)">Delete</button>
+              </div>
+              </popover-content>
+              <span class="pull-right clickable" [popover]="groupPopover"><i class="glyphicon glyphicon-menu-hamburger"></i></span>
             </div>
 
             <div *ngIf="group.isInEditMode">
@@ -74,7 +83,7 @@
   </div>
 </div>
 
-
+<!-- create new group modal dialog -->
 <div class="modal fade" bsModal #createGroupModal="bs-modal" tabindex="-1" role="dialog" (onShown)="onCreateGroupModalShown()"
   aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">

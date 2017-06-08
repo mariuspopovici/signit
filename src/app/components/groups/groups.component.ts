@@ -4,6 +4,9 @@ import { GroupsService } from '../../services/groups.service';
 import { ProfileService } from '../../services/profile.service';
 import { Input, Output, AfterContentInit, ContentChild, AfterViewInit, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { ResolveEmit } from '@jaspero/ng2-confirmations/src/interfaces/resolve-emit';
+
 
 /**
  * Groups component. Allow user to create and organize review / sign groups.
@@ -29,7 +32,8 @@ export class GroupsComponent implements OnInit {
   // init an event emitter to set focus to specific input fields
   focusSettingEventEmitter = new EventEmitter<boolean>();
 
-  constructor(private groupsService: GroupsService, private profileService: ProfileService) { }
+  constructor(private groupsService: GroupsService, private profileService: ProfileService,
+    private confirmationService: ConfirmationService) { }
 
 
   ngOnInit() {
@@ -124,7 +128,7 @@ export class GroupsComponent implements OnInit {
    * On drop handler.
    */
   onDrop(e: any, group: any) {
-    let groupName = e.dragData;
+    const groupName = e.dragData;
     if (group.groupMembers.indexOf(groupName) < 0) {
       group.groupMembers.push(e.dragData);
     }
@@ -147,7 +151,7 @@ export class GroupsComponent implements OnInit {
    */
   createNewGroup(form: NgForm) {
     if (form.value) {
-      let group = {
+      const group = {
         groupName: form.value.inputGroupName,
         groupMembers: []
       };
@@ -168,5 +172,24 @@ export class GroupsComponent implements OnInit {
     setTimeout(() => {
       this.setFocus();
     });
+  }
+
+  /**
+   * Deletes a group.
+   * @param group the group to delete
+   */
+  deleteGroup(group) {
+    this.confirmationService.create('Confirm delete', 'Are you sure you want to delete the selected group?')
+      // The confirmation returns an Observable Subject which will notify you about the outcome
+      .subscribe((ans: ResolveEmit) => {
+        if (ans.resolved) {
+          this.groupsService.deleteGroup(group).subscribe((data) => {}, (err) => {
+            console.error('Error deleting group.', err);
+          });
+          // remove group from model too
+          const removeIndex = this.groups.map(function(item) { return item._id; }).indexOf(group._id);
+          this.groups.splice(removeIndex, 1);
+        }
+      });
   }
 }
