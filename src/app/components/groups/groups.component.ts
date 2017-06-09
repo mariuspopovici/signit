@@ -158,10 +158,16 @@ export class GroupsComponent implements OnInit {
       this.groupsService.addGroup(group).subscribe((data) => {
         this.groups.push(data);
         this.newGroupName = null;
+        form.reset();
       }, (err) => {
         console.error('Error adding group.', err);
       });
     }
+  }
+
+  createGroupModelCancel(form: NgForm) {
+    this.newGroupName = null;
+    form.reset();
   }
 
   /**

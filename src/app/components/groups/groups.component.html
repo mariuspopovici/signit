@@ -39,7 +39,6 @@
       <div class="col-md-4" *ngFor="let group of groups">
         <div class="panel panel-info">
           <div class="panel-heading">
-
             <div *ngIf="!group.isInEditMode">
               <h3 class="panel-title clickable" (click)="toggleGroupEdit(group)">{{group.groupName}}</h3>
               <!-- group popover menu -->
@@ -106,7 +105,7 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-12">
-              <button type="button" (click)="createGroupModal.hide()" class="btn pull-right btn-primary-spacing">Cancel</button>
+              <button type="button" (click)="createGroupModal.hide();createGroupModelCancel(createGroupForm);" class="btn pull-right btn-primary-spacing">Cancel</button>
               <button type="submit" [disabled]="!createGroupForm.form.valid" (click)="createGroupModal.hide()" class="btn btn-primary pull-right btn-primary-spacing">OK</button>
             </div>
           </div>
