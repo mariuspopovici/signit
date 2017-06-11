@@ -5,7 +5,7 @@ import {HomeComponent} from './components/home/home.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {AuthGuard} from './auth.guard';
 import { GroupsComponent } from './components/groups/groups.component';
-
+import { UploadComponent } from './components/upload/upload.component';
 
 const appRoutes: Routes = [
     {
@@ -20,6 +20,11 @@ const appRoutes: Routes = [
     {
         path: 'groups',
         component: GroupsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'upload',
+        component: UploadComponent,
         canActivate: [AuthGuard]
     }
 ];

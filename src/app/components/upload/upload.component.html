@@ -1,5 +1,10 @@
-<dropzone 
-  [config]="dropzoneConfig"
-  [message]="'Click or drag document here to upload'" 
-  (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
-</dropzone>
+
+<div class="row">
+  
+  <div class="col-md-8 col-md-offset-2">
+    <div [dropzone]="dropzoneConfig" 
+      (error)="onUploadError($event)" 
+      (success)="onUploadSuccess($event)"
+    ></div>
+  </div>
+  

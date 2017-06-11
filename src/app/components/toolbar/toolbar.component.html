@@ -14,6 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a routerLink="/">Home</a></li>
                 <li><a routerLink="/groups" *ngIf="auth.authenticated()">Groups</a></li>
+                <li><a routerLink="/upload" *ngIf="auth.authenticated()">Upload</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" (click)="auth.login()" *ngIf="!auth.authenticated()">Login</a></li>

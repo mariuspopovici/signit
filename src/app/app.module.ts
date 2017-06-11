@@ -10,8 +10,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-popover';
 import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DropzoneModule } from 'angular2-dropzone-wrapper';
-import { DropzoneConfigInterface } from 'angular2-dropzone-wrapper';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 // components
 import { AppComponent } from './app.component';

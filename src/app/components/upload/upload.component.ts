@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DropzoneConfigInterface } from 'angular2-dropzone-wrapper/dist';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper/dist';
+
 
 @Component({
   selector: 'app-upload',
-  templateUrl: 'upload.component.html'
+  templateUrl: 'upload.component.html',
+  styleUrls: ['upload.component.css']
 })
 
 export class UploadComponent implements OnInit {
@@ -14,9 +16,12 @@ export class UploadComponent implements OnInit {
   constructor() {
     // app consts
     this.dropzoneConfig = {
-      server: '/api/fileupload',
+      server: 'https://httpbin.org/post',
       maxFilesize: 50,
-      acceptedFiles: 'image/*'
+      acceptedFiles: 'image/*,application/pdf,.doc,.docx,.xls,xlsx',
+      params: 'directory=images',
+      dictDefaultMessage: `<h4>Drop files here or click to start a new document upload</h4>`,
+      createImageThumbnails: true
     };
   }
 
