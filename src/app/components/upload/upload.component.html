@@ -1,10 +1,34 @@
 
 <div class="row">
-  
   <div class="col-md-8 col-md-offset-2">
     <div [dropzone]="dropzoneConfig" 
       (error)="onUploadError($event)" 
       (success)="onUploadSuccess($event)"
     ></div>
+    <tag-input [ngModel]="tags" [identifyBy]="'id'" [displayBy]="'name'" 
+      [placeholder]="'+ Reviewer'"
+      [secondaryPlaceholder]="'Add reviewers'"
+      [onlyFromAutocomplete]="true"
+      [theme]="'bootstrap'">
+      <tag-input-dropdown
+        [limitItemsTo]="10"
+        [showDropdownIfEmpty]="true"
+        [autocompleteItems]="autoCompleteTags"
+        [focusFirstElement]="true"
+        [displayBy]="'name'"
+        [identifyBy]="'id'">
+        <ng-template let-item="item" let-index="index">
+          <i *ngIf="item.type==='user'" class="fa fa-user"></i>
+          <i *ngIf="item.type==='group'" class="fa fa-users"></i> {{ item.name }} ({{item.id}})
+        </ng-template>
+       </tag-input-dropdown>
+    </tag-input> 
+
   </div>
+</div>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+  </div>
+</div>
   

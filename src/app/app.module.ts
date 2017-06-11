@@ -12,6 +12,7 @@ import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { TagInputModule } from 'ng2-tag-input';
 
 // components
 import { AppComponent } from './app.component';
@@ -42,8 +43,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, Ng2DragDropModule, ModalModule.forRoot(), PopoverModule,
-    JasperoConfirmationsModule, BrowserAnimationsModule, DropzoneModule.forRoot(DROPZONE_CONFIG)],
+  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, 
+    Ng2DragDropModule, ModalModule.forRoot(), PopoverModule,
+    JasperoConfirmationsModule, BrowserAnimationsModule,
+    DropzoneModule.forRoot(DROPZONE_CONFIG), TagInputModule],
   declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent, FocusDirective,
     UploadComponent ],
   bootstrap: [ AppComponent ],
