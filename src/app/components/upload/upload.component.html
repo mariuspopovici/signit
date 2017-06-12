@@ -5,14 +5,18 @@
       (error)="onUploadError($event)" 
       (success)="onUploadSuccess($event)"
     ></div>
-    <tag-input [ngModel]="tags" [identifyBy]="'id'" [displayBy]="'name'" 
+    <tag-input #tagInput [ngModel]="tags" [identifyBy]="'id'" [displayBy]="'name'"
       [placeholder]="'+ Reviewer'"
       [secondaryPlaceholder]="'Add reviewers'"
       [onlyFromAutocomplete]="true"
-      [theme]="'bootstrap'">
+      [theme]="'bootstrap'"
+      (onAdd)="onAddReviewer($event)"
+      (onRemove)="onRemoveReviewer($event)"
+      [tabindex]="0"
+      [inputId]="'tagInput'"
+      >
       <tag-input-dropdown
         [limitItemsTo]="10"
-        [showDropdownIfEmpty]="true"
         [autocompleteItems]="autoCompleteTags"
         [focusFirstElement]="true"
         [displayBy]="'name'"
@@ -24,6 +28,7 @@
        </tag-input-dropdown>
     </tag-input> 
 
+    <a href="#" class="upload-button btn btn-block btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-cloud-upload"></span> Submit</a>
   </div>
 </div>
 <div class="row">

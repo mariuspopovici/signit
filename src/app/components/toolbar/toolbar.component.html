@@ -13,6 +13,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a routerLink="/">Home</a></li>
+                <li><a routerLink="/tasks" *ngIf="auth.authenticated()">My Tasks <span class="badge badge-pill badge-danger">5</span></a></li>
                 <li><a routerLink="/groups" *ngIf="auth.authenticated()">Groups</a></li>
                 <li><a routerLink="/upload" *ngIf="auth.authenticated()">Upload</a></li>
             </ul>
