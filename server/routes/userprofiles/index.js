@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var connection = require('../../shared/mongoconn.js');
 var db = connection.db;
+var mongojs = connection.mongojs;
 
 // get user profiles
 router.get('/', function(req, res, next) {
@@ -18,12 +19,17 @@ router.put('/:id', function(req, res, next) {
     var profile = req.body;
     var updObj = {};
 
+
     if (profile.name) {
         updObj.name = profile.name;
     }
 
     if (profile.email) {
         updObj.email = profile.email;
+    }
+
+    if (profile.picture) {
+      updObj.picture = profile.picture;
     }
 
     if (profile.user_metadata) {

@@ -2,12 +2,12 @@
 <h5><strong>Nickname: </strong>{{profile.nickname}}</h5>
 <div class="row">
     <div class="col-md-2">
-        <img class="thumbnail" style="width:100%" src={{profile.picture}}> 
+        <img class="thumbnail" style="width:100%" src={{profile.picture}}>
     </div>
     <div class="col-md-10">
         <ul class="list-group">
             <li class="list-group-item"><strong>E-Mail: </strong>{{profile.email}}</li>
-            <li class="list-group-item"><strong>Last Updated: </strong>{{profile.updated_at}}</li>
+            <li class="list-group-item"><strong>Last Updated: </strong>{{profile.updated_at | date: 'fullDate'}}</li>
         </ul>
     </div>
 </div>

@@ -1,8 +1,8 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <div [dropzone]="dropzoneConfig" 
-      (error)="onUploadError($event)" 
+    <div [dropzone]="dropzoneConfig"
+      (error)="onUploadError($event)"
       (success)="onUploadSuccess($event)"
     ></div>
     <tag-input #tagInput [ngModel]="tags" [identifyBy]="'id'" [displayBy]="'name'"
@@ -14,6 +14,7 @@
       (onRemove)="onRemoveReviewer($event)"
       [tabindex]="0"
       [inputId]="'tagInput'"
+      [dragZone]="'zone1'"
       >
       <tag-input-dropdown
         [limitItemsTo]="10"
@@ -22,13 +23,13 @@
         [displayBy]="'name'"
         [identifyBy]="'id'">
         <ng-template let-item="item" let-index="index">
-          <i *ngIf="item.type==='user'" class="fa fa-user"></i>
-          <i *ngIf="item.type==='group'" class="fa fa-users"></i> {{ item.name }} ({{item.id}})
+          <span *ngIf="item.type==='user'"><i class="fa fa-user"></i> {{ item.name }} ({{item.id}})</span>
+          <span *ngIf="item.type==='group'"><i class="fa fa-users"></i> {{ item.name }}</span>
         </ng-template>
        </tag-input-dropdown>
-    </tag-input> 
+    </tag-input>
 
-    <a href="#" class="upload-button btn btn-block btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-cloud-upload"></span> Submit</a>
+    <button [disabled]="tags.length < 2" type="button" (click)="previewDialog.show()" class="upload-button btn btn-block btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-cloud-upload"></span> Submit</button>
   </div>
 </div>
 <div class="row">
@@ -36,4 +37,52 @@
   <div class="col-md-8">
   </div>
 </div>
-  
+
+<template #itemTemplate let-item="item" let-index="index">
+    <div class="text-center">
+      <div class="profile-header-img">
+        <img class="img-circle img-responsive center-block" src={{item.initData.picture}} style="width: 50px;height:50px;">
+      </div>
+      <h4 class="media-heading"> <i *ngIf="(index === tags.length - 1)" class="fa fa-lock" aria-hidden="true"></i> {{item.value}}</h4>
+      <i *ngIf="index < tags.length && index !== tags.length - 1" class="fa fa-long-arrow-down fa-2x" aria-hidden="true"></i>
+    </div>
+</template>
+
+<div bsModal #previewDialog="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Start Review Task</h4>
+        <button type="button" class="close pull-right" (click)="previewDialog.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Drag and drop users to define review order. Click Start when ready.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <bs-sortable
+              [(ngModel)]="tags"
+              fieldName="name"
+              [itemTemplate]="itemTemplate"
+              itemClass="sortable-item"
+              itemActiveClass="sortable-item-active"
+              placeholderItem="Drag here"
+              placeholderClass="placeholderStyle"
+              wrapperClass="sortable-wrapper"
+            ></bs-sortable>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <button type="button" class="upload-button btn btn-success"><span class="fa fa-paper-plane"></span> Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,7 +21,7 @@
         <form *ngIf="showSearch" class="form-search searchbox" method="get" id="searchForm" action="/">
           <div class="inner-addon right-addon">
             <i class="glyphicon glyphicon-search"></i>
-            <input type="text" [focus]="focusSettingEventEmitter" [(ngModel)]="userFilter" class="form-control" name="search" placeholder="Search"
+            <input type="text" [focus]="focusSettingEventEmitter" [(ngModel)]="userFilter.full_name" class="form-control" name="search" placeholder="Search"
               value="">
           </div>
         </form>
@@ -29,7 +29,7 @@
         <ul class="list-group">
           <li *ngIf="(users | filterBy: userFilter).length === 0" class="list-group-item">No matching elements</li>
           <li *ngFor="let user of users |filterBy: userFilter; let i = index" class="list-group-item" draggable [dragScope]="'user'"
-            [dragData]="user">{{user}}</li>
+            [dragData]="user">{{user.full_name}}</li>
         </ul>
       </div>
     </div>
@@ -72,7 +72,7 @@
           <div class="panel-body" droppable [dropScope]="['user']" (onDrop)="onDrop($event, group)">
             <ul class="list-group">
               <li *ngFor="let member of group.groupMembers" draggable [dragScope]="'user'" [dragData]="member" (onDragEnd)="onDragEnd($event, member, group)"
-                class="list-group-item">{{member}}
+                class="list-group-item">{{member.full_name}}
               </li>
             </ul>
           </div>

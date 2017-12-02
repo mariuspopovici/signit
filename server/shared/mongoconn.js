@@ -9,3 +9,4 @@ var dbUrl = process.env.DB_USER + ":"
 var db = mongojs(dbUrl, ['groups', 'user_profiles']);
 
 exports.db = db;
+exports.mongojs = mongojs;

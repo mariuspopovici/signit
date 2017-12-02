@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var connection = require('../../shared/mongoconn.js');
 var db = connection.db;
+var mongojs = connection.mongojs;
 
 // get all groups
 router.get('/', function(req, res, next) {
@@ -59,6 +60,10 @@ router.put('/:id', function(req, res, next) {
 
     if (group.groupMembers) {
         updObj.groupMembers = group.groupMembers;
+    }
+
+    if (group.groupOwner) {
+      updObj.groupOwner = group.groupOwner;
     }
 
     if (!updObj) {

@@ -3,6 +3,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper/dist';
 import { GroupsService } from '../../services/groups.service';
 import { ProfileService } from '../../services/profile.service';
 import { ViewChild} from '@angular/core';
+import { SortableComponent } from 'ngx-bootstrap/sortable';
 
 
 @Component({
@@ -14,10 +15,18 @@ import { ViewChild} from '@angular/core';
 export class UploadComponent implements OnInit {
 
   public dropzoneConfig: DropzoneConfigInterface;
-  public tags: Recipient [];
+  public tags: any [];
   public autoCompleteTags: Recipient [];
+  public fileUploaded: boolean;
 
+  @ViewChild(SortableComponent) sortableComponent: SortableComponent;
   @ViewChild('tagInput') tagInputElement: any;
+
+  public itemObjectsLeft: any[] = [
+      { id: 1, name: 'Windstorm' },
+      { id: 2, name: 'Bombasto' },
+      { id: 3, name: 'Magneta' }
+    ];
 
   constructor(private groupsService: GroupsService, private profileService: ProfileService) {
     // app consts
@@ -32,6 +41,7 @@ export class UploadComponent implements OnInit {
 
     this.tags = [];
     this.autoCompleteTags = [];
+    this.fileUploaded = false;
   }
 
   ngOnInit() {
@@ -40,7 +50,9 @@ export class UploadComponent implements OnInit {
         const reviewGroup: Recipient = {
             name: group.groupName,
             type: 'group',
-            id: group.groupName
+            id: group._id,
+            picture: '',
+            members: group.groupMembers
         };
         this.autoCompleteTags.push(reviewGroup);
       })
@@ -51,7 +63,9 @@ export class UploadComponent implements OnInit {
         const reviewer: Recipient = {
           name: userProfile.full_name,
           type: 'user',
-          id: userProfile.email
+          id: userProfile.email,
+          picture: userProfile.picture ? userProfile.picture : '',
+          members: [userProfile]
         };
         this.autoCompleteTags.push(reviewer);
       });
@@ -65,17 +79,21 @@ export class UploadComponent implements OnInit {
 
   onUploadSuccess(e) {
     // focus on reviewer input box
+    this.fileUploaded = true;
     setTimeout(() => {
       this.tagInputElement.focus(true);
     });
   }
 
-  onAddReviewer(event) {
-    console.log(event);
+  onAddReviewer(reviewer) {
+    this.tags.push(reviewer);
+    this.sortableComponent.writeValue(this.tags);
   }
 
-  onRemoveReviewer(event) {
-    console.log(event);
+  onRemoveReviewer(reviewer) {
+    const removeIndex = this.tags.map(function(item) { return item.id; }).indexOf(reviewer.id);
+    this.tags.splice(removeIndex, 1);
+    this.sortableComponent.writeValue(this.tags);
   }
 }
 
@@ -83,4 +101,6 @@ export interface Recipient {
     name: string;
     type: string;
     id: string;
+    picture: string;
+    members: any [];
 }

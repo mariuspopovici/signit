@@ -37,7 +37,7 @@ export class GroupsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.userFilter = '';
+    this.userFilter = { full_name: '' };
     this.showSearch = false;
     this.users = [];
     this.newGroupName = '';
@@ -47,7 +47,7 @@ export class GroupsComponent implements OnInit {
 
     this.profileService.getAllProfiles().subscribe(profiles => {
       profiles.forEach(userProfile => {
-        this.users.push(userProfile.full_name);
+        this.users.push(userProfile);
       });
     });
   }
@@ -128,8 +128,8 @@ export class GroupsComponent implements OnInit {
    * On drop handler.
    */
   onDrop(e: any, group: any) {
-    const groupName = e.dragData;
-    if (group.groupMembers.indexOf(groupName) < 0) {
+    console.log(e);
+    if (!group.groupMembers.find(x => x.name === e.dragData.name)) {
       group.groupMembers.push(e.dragData);
     }
     this._saveGroup(group);
@@ -151,7 +151,10 @@ export class GroupsComponent implements OnInit {
    */
   createNewGroup(form: NgForm) {
     if (form.value) {
+      const myProfile = JSON.parse(localStorage.getItem('profile'));
+
       const group = {
+        groupOwner: myProfile.email,
         groupName: form.value.inputGroupName,
         groupMembers: []
       };
@@ -165,7 +168,7 @@ export class GroupsComponent implements OnInit {
     }
   }
 
-  createGroupModelCancel(form: NgForm) {
+  createGroupModalCancel(form: NgForm) {
     this.newGroupName = null;
     form.reset();
   }

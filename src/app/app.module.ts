@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { TagInputModule } from 'ng2-tag-input';
+import { NgCytoscapeModule } from 'ng2-cytoscape';
+import { SortableModule } from 'ngx-bootstrap/sortable';
 
 // components
 import { AppComponent } from './app.component';
@@ -21,6 +23,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { UploadComponent } from './components/upload/upload.component'
+import { PreviewComponent } from './components/preview/preview.component'
 
 // services
 import { Auth } from './services/auth.service';
@@ -43,11 +46,13 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule, 
-    Ng2DragDropModule, ModalModule.forRoot(), PopoverModule,
-    JasperoConfirmationsModule, BrowserAnimationsModule,
+  imports: [
+    BrowserModule, FormsModule, HttpModule, routing, Ng2FilterPipeModule,
+    Ng2DragDropModule, ModalModule.forRoot(), PopoverModule, NgCytoscapeModule,
+    JasperoConfirmationsModule, BrowserAnimationsModule, SortableModule.forRoot(),
     DropzoneModule.forRoot(DROPZONE_CONFIG), TagInputModule],
-  declarations: [ AppComponent, HomeComponent, ProfileComponent, ToolbarComponent, GroupsComponent, FocusDirective,
+  declarations: [ AppComponent, HomeComponent, ProfileComponent,
+    ToolbarComponent, GroupsComponent, FocusDirective, PreviewComponent,
     UploadComponent ],
   bootstrap: [ AppComponent ],
   providers: [
